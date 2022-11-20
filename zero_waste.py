@@ -24,7 +24,6 @@ def zero_waste():
         
 
 
-
     def buy_item():
         more_items = True
         header = ["Ingredients", "Quantity", "Best by date"]
