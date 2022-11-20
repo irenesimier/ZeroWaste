@@ -5,19 +5,23 @@ import os.path
 def zero_waste():
 
     def convert_date(date):
-        time = date.split("/")
-        for num in time:
-            while not num.isdecimal():
+        incorrect = True
+        while (incorrect):
+            try:
+                time = date.split("/")
+                while len(time[0]) != 4 or len(time[1]) != 2 or len(time[2]) != 2:
+                    date = input("Incorrect date format. Please re-input the date: ")
+                    time = date.split("/")    
+                if int(time[1]) == 0:
+                    time[1].remove("0")
+                if int(time[2]) == 0:
+                    time[2].remove("0")
+                date = datetime.datetime(int(time[0]), int(time[1]), int(time[2]))
+                incorrect = False
+                return date
+            except ValueError:
                 date = input("Incorrect date format. Please re-input the date: ")
-        while len(time[0]) != 4 or len(time[1]) != 2 or len(time[2]) != 2:
-            date = input("Incorrect date format. Please re-input the date: ")
-        time = date.split("/")
-        if int(time[1]) == 0:
-            time[1].remove("0")
-        if int(time[2]) == 0:
-            time[2].remove("0")
-        date = datetime.datetime(int(time[0]), int(time[1]), int(time[2]))
-        return date
+        
 
 
 
@@ -109,26 +113,27 @@ def zero_waste():
         make_changes=True
         while make_changes:
             print ("""
-            1.Buy item (Type STOP to stop buying)
-            2.Consume item (Type STOP to stop consuming)
-            3.Prepare today's donation list
-            4.Exit
+            What would you like to do? 
+            1. Buy item (Type STOP to stop buying)
+            2. Consume item (Type STOP to stop consuming)
+            3. Prepare today's donation list
+            4. Exit
             """)
-            ans=input("What would you like to do? ") 
+            ans=input("Select an option above: ") 
             if ans=="1":
                 buy_item()
-                print("\n Items added to Stock") 
+                print("\n Items added to Stock.") 
             elif ans=="2":
                 consume_item()
-                print("\n Item removed from Stock") 
+                print("\n Items removed from Stock.") 
             elif ans=="3":
                 donate()  
-                print("\n Donation list is ready")
+                print("\n Donation list is updated.")
             elif ans=="4":
                 make_changes=False
                 print("\n Exit")  
-            elif ans !="":
-                print("\n Not Valid Choice Try again")
+            else:
+                print("\n Invalid choice, please re-input an option: ")
     
     
     
